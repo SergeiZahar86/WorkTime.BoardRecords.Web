@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTime.BoardRecords.Web", "WorkTime.BoardRecords.Web\WorkTime.BoardRecords.Web.csproj", "{2BE6E368-B793-42C4-8875-946465073824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkTime.JavaScriptApp", "WorkTime.JavaScriptApp\WorkTime.JavaScriptApp.csproj", "{3807B265-5EF1-4CE6-81DA-9AB08DDE2F7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BE6E368-B793-42C4-8875-946465073824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE6E368-B793-42C4-8875-946465073824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE6E368-B793-42C4-8875-946465073824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE6E368-B793-42C4-8875-946465073824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3807B265-5EF1-4CE6-81DA-9AB08DDE2F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3807B265-5EF1-4CE6-81DA-9AB08DDE2F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3807B265-5EF1-4CE6-81DA-9AB08DDE2F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3807B265-5EF1-4CE6-81DA-9AB08DDE2F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08E0D461-A8D5-4899-A7BC-2791C4B34434}
+	EndGlobalSection
+EndGlobal
