@@ -19,6 +19,8 @@ var settings = {
 }
 
 var manager = new Oidc.UserManager(settings);
+
+
 // обращене к хранимому объекту (например в window.localStorage ) после входа
 manager.getUser().then(function (user) {
     if (user) {

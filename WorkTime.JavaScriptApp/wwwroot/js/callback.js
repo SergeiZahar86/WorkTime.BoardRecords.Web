@@ -6,7 +6,7 @@
 
 manager.signinRedirectCallback()
     .then(function (user) {
-        console.log(user);
+        console.log("User from collback:  ",user);
         window.location.href = "https://localhost:9001";
     })
     .catch(function (error) {
