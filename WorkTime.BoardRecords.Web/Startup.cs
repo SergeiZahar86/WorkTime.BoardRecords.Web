@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
@@ -17,6 +18,11 @@ namespace WorkTime.BoardRecords.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(config =>
+            {
+                config.AddPolicy("DefaultPolicy",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -67,12 +73,18 @@ namespace WorkTime.BoardRecords.Web
                 options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
             })
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.ApiName = "SwaggerAPI";
-                    options.Authority = "https://localhost:10001";
-                    options.RequireHttpsMetadata = false;
-                });
+                .AddJwtBearer("Bearer",
+                     options =>
+                     {
+                         options.Authority = "https://localhost:10001";
+                         options.Audience = "SwaggerAPI";
+                         options.RequireHttpsMetadata = false;
+
+                         options.TokenValidationParameters = new TokenValidationParameters()
+                         {
+                             ValidateAudience = false
+                         };
+                     });
 
             services.AddAuthorization();
 
@@ -103,7 +115,7 @@ namespace WorkTime.BoardRecords.Web
             });
 
             app.UseRouting();
-
+            app.UseCors("DefaultPolicy");
             app.UseAuthentication();
 
             app.UseAuthorization();

@@ -8,15 +8,18 @@ var settings = {
     authority: "https://localhost:10001",
     client_id: "client_id_js",
     response_type: "code",
-    scope: "openid profile OrdersAPI",
+    scope: "openid profile SwaggerAPI",
+    //scope: "openid profile OrdersAPI",
 
+
+    // перенаправление после залогирования
     redirect_uri: "https://localhost:9001/callback.html",
-    silent_redirect_uri : "https://localhost:9001/refresh.html",
-    post_logout_redirect_uri : "https://localhost:9001/index.html"
+    silent_redirect_uri: "https://localhost:9001/refresh.html",
+    post_logout_redirect_uri: "https://localhost:9001/index.html"
 }
 
 var manager = new Oidc.UserManager(settings);
-
+// обращене к хранимому объекту (например в window.localStorage ) после входа
 manager.getUser().then(function (user) {
     if (user) {
         print("Log in success", user);
@@ -25,7 +28,11 @@ manager.getUser().then(function (user) {
     }
 });
 
-manager.events.addUserSignedOut(function() {
+function login() {
+    manager.signinRedirect();
+}
+
+manager.events.addUserSignedOut(function () {
     print("User sing out. Good bye.");
 });
 
@@ -49,7 +56,8 @@ function callApi() {
         }
 
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://localhost:5001/site/secret");
+        //xhr.open("GET", "https://localhost:5001/site/secret");
+        xhr.open("GET", "https://localhost:7001/Api/GetAll");
         xhr.onload = function () {
             if (xhr.status === 200) {
                 print(xhr.responseText, xhr.response);
@@ -67,9 +75,6 @@ function callApi() {
 }
 
 
-function login() {
-    manager.signinRedirect();
-}
 
 
 function print(message, data) {
