@@ -25,6 +25,7 @@ var manager = new Oidc.UserManager(settings);
 manager.getUser().then(function (user) {
     if (user) {
         print("Log in success", user);
+        console.log("id user:", user.profile.sub)
     } else {
         print("User not logged in");
     }
