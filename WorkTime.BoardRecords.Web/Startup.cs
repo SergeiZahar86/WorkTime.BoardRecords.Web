@@ -1,7 +1,8 @@
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
@@ -9,15 +10,34 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WorkTime.BoardRecords.Web.models;
 
 namespace WorkTime.BoardRecords.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(config =>
+            {
+                config.UseSqlServer(Configuration.GetConnectionString(nameof(ApplicationDbContext)));
+            })
+                .AddIdentity<AppUser, AppRole>(config =>
+                {
+                    config.Password.RequireDigit = false;
+                    config.Password.RequireLowercase = false;
+                    config.Password.RequireNonAlphanumeric = false;
+                    config.Password.RequireUppercase = false;
+                    config.Password.RequiredLength = 4;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
             services.AddCors(config =>
             {
                 config.AddPolicy("DefaultPolicy",
@@ -88,8 +108,11 @@ namespace WorkTime.BoardRecords.Web
 
             services.AddAuthorization();
 
-            services.AddControllers();
-
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling =
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+            services.AddMvc();
 
 
         }
